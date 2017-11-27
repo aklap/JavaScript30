@@ -7,40 +7,48 @@
 </head>
 <body>
 
-
   <div class="keys">
+    <!-- A key -->
     <div data-key="65" class="key">
       <kbd>A</kbd>
       <span class="sound">clap</span>
     </div>
+    <!-- S key -->
     <div data-key="83" class="key">
       <kbd>S</kbd>
       <span class="sound">hihat</span>
     </div>
+    <!-- D key -->
     <div data-key="68" class="key">
       <kbd>D</kbd>
       <span class="sound">kick</span>
     </div>
+    <!-- F key -->
     <div data-key="70" class="key">
       <kbd>F</kbd>
       <span class="sound">openhat</span>
     </div>
+    <!-- G key -->
     <div data-key="71" class="key">
       <kbd>G</kbd>
       <span class="sound">boom</span>
     </div>
+    <!-- H key -->
     <div data-key="72" class="key">
       <kbd>H</kbd>
       <span class="sound">ride</span>
     </div>
+    <!-- J Key  -->
     <div data-key="74" class="key">
       <kbd>J</kbd>
       <span class="sound">snare</span>
     </div>
+    <!-- K key -->
     <div data-key="75" class="key">
       <kbd>K</kbd>
       <span class="sound">tom</span>
     </div>
+    <!-- L key -->
     <div data-key="76" class="key">
       <kbd>L</kbd>
       <span class="sound">tink</span>
@@ -58,7 +66,38 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  // Play an audio file 
+  function playSound(e) {
+    // Tricky string interpolation, here: use ES6 `${}` syntax and use double quote marks to allow interpolation. 
 
+    // .querySelector() is similar to #find, returns the first match only
+    const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+
+  // If that key is on our page, play the audio
+    if(key) {
+      // Set playhead of track back to beginning by setting the value of the currentTime attribute to 0, otherwise repeated keypress will have lagging audio.
+      audio.currentTime = 0;
+      // Add CSS animation on keydown event
+      key.classList.add('playing');
+      // Play the audio from that playhead position.
+      audio.play();
+    }
+  };
+
+  const keys = document.querySelectorAll('.key');
+  
+  // Reset the appearance of a key after it's pressed
+  function removeAnimation(e) {
+    e.target.classList.remove('playing');
+  }
+
+  // Reset appearance of key after key is pressed
+  // NOTE: transitionend is fired when a CSS transition has completed
+  keys.forEach(k => k.addEventListener('transitionend', removeAnimation));
+
+  // On keydown, play sound
+  window.addEventListener('keydown', playSound);
 </script>
 
 

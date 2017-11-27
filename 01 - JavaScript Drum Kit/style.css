@@ -32,8 +32,11 @@ body,html {
 }
 
 .playing {
+  /* This makes the element larger by scaling it up */
   transform: scale(1.1);
+  /* Changes border color */
   border-color: #ffc600;
+  /* Changes shadow and color around element border */
   box-shadow: 0 0 1rem #ffc600;
 }
 
